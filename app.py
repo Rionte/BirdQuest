@@ -868,12 +868,16 @@ def get_stats():
         date_str = c.date.strftime("%Y-%m-%d")
         daily_counts[date_str] = daily_counts.get(date_str, 0) + 1
 
+    # Count owned birds
+    owned_birds_count = OwnedBird.query.filter_by(user_id=current_user.id).count()
+
     return jsonify(
         {
             "streak": current_user.streak,
             "level": current_user.level,
             "total_xp": current_user.xp + (current_user.level - 1) * XP_PER_LEVEL,
             "seeds": current_user.seeds,
+            "birds": owned_birds_count,
             "daily_completions": daily_counts,
         }
     )

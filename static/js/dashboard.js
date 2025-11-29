@@ -402,11 +402,7 @@ async function fetchStats() {
     document.getElementById("stats-streak").textContent = data.streak;
     document.getElementById("stats-level").textContent = data.level;
     document.getElementById("stats-seeds").textContent = data.seeds;
-
-    // Calculate owned birds (count unique entries)
-    const ownedBirds =
-      document.querySelectorAll(".bird-card.owned").length || "-";
-    document.getElementById("stats-birds").textContent = ownedBirds;
+    document.getElementById("stats-birds").textContent = data.birds || 0;
 
     // Render activity chart
     renderActivityChart(data.daily_completions);

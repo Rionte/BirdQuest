@@ -4,6 +4,22 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<style>
+    .icon-seeds {
+        width: 1.2em;
+        height: 1.2em;
+        vertical-align: middle;
+        display: inline-block;
+    }
+    .stat-icon .icon-seeds {
+        width: 1.5em;
+        height: 1.5em;
+    }
+    .stats-item-icon .icon-seeds {
+        width: 2em;
+        height: 2em;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -21,7 +37,7 @@
             <span class="stat-label">Level</span>
         </div>
         <div class="stat-item">
-            <span class="stat-icon">🌱</span>
+            <span class="stat-icon"><img src="{{ url_for('static', filename='images/seeds.png') }}" alt="Seeds" class="icon-seeds"></span>
             <span class="stat-value" id="seeds-count">{{ current_user.seeds }}</span>
             <span class="stat-label">Seeds</span>
         </div>
@@ -218,12 +234,12 @@
                 <div class="stats-item-label">Level</div>
             </div>
             <div class="stats-item">
-                <div class="stats-item-icon">🌱</div>
+                <div class="stats-item-icon"><img src="{{ url_for('static', filename='images/seeds.png') }}" alt="Seeds" class="icon-seeds"></div>
                 <div class="stats-item-value" id="stats-seeds">{{ current_user.seeds }}</div>
                 <div class="stats-item-label">Seeds</div>
             </div>
             <div class="stats-item">
-                <div class="stats-item-icon">🐦</div>
+                <div class="stats-item-icon"><img src="{{ url_for('static', filename='images/Blue_Jay.png') }}" alt="Birds" class="icon-seeds"></div>
                 <div class="stats-item-value" id="stats-birds">-</div>
                 <div class="stats-item-label">Birds</div>
             </div>
@@ -243,7 +259,7 @@
         <div class="level-up-icon">🎉</div>
         <h2>Level Up!</h2>
         <div class="new-level" id="new-level">Level 2</div>
-        <div class="seeds-reward">+<span id="seeds-earned">10</span> 🌱 Seeds Earned!</div>
+        <div class="seeds-reward">+<span id="seeds-earned">10</span> <img src="{{ url_for('static', filename='images/seeds.png') }}" alt="Seeds" class="icon-seeds"> Seeds Earned!</div>
         <button class="btn" onclick="closeLevelUp()">Awesome!</button>
     </div>
 </div>

@@ -781,7 +781,42 @@ def get_stats():
 # Initialize database
 def init_db():
     with app.app_context():
+        # Get the instance folder path (where Flask-SQLAlchemy stores the db)
+        instance_path = app.instance_path
+        db_filename = app.config["SQLALCHEMY_DATABASE_URI"].replace("sqlite:///", "")
+        db_path = os.path.join(instance_path, db_filename)
+
+        # Ensure instance folder exists
+        if not os.path.exists(instance_path):
+            os.makedirs(instance_path)
+            print(f"📁 Created instance folder: {instance_path}")
+
+        # Check if database file exists
+        db_exists = os.path.exists(db_path)
+
+        if not db_exists:
+            print(f"📁 Database not found at {db_path}. Creating new database...")
+
+        # Create all tables if they don't exist
         db.create_all()
+
+        # Verify tables were created by checking if we can query them
+        try:
+            User.query.first()
+            OwnedBird.query.first()
+            CompletedHabit.query.first()
+            CustomHabit.query.first()
+            HiddenHabit.query.first()
+            if not db_exists:
+                print("✅ Database and tables created successfully!")
+            else:
+                print("✅ Database tables verified!")
+        except Exception as e:
+            print(f"⚠️ Error verifying tables: {e}")
+            # Force recreate tables
+            db.drop_all()
+            db.create_all()
+            print("✅ Database tables recreated!")
 
 
 if __name__ == "__main__":

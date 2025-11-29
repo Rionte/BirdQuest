@@ -51,6 +51,20 @@
         height: 24px;
     }
 
+    .icon-bird {
+        width: 1.5em;
+        height: 1.5em;
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    .icon-seeds {
+        width: 1.2em;
+        height: 1.2em;
+        vertical-align: middle;
+        display: inline-block;
+    }
+
     /* Multiplier Info */
     .multiplier-section {
         background: white;
@@ -541,10 +555,10 @@
 <div class="shop-container">
     <!-- Header -->
     <header class="shop-header">
-        <h1 class="shop-title">🐦 Bird Shop</h1>
+        <h1 class="shop-title"><img src="{{ url_for('static', filename='images/Blue_Jay.png') }}" alt="Bird" class="icon-bird"> Bird Shop</h1>
         <p class="shop-subtitle">Collect birds to boost your seed earnings!</p>
         <div class="seeds-display">
-            <span>🌱</span>
+            <span><img src="{{ url_for('static', filename='images/seeds.png') }}" alt="Seeds" class="icon-seeds"></span>
             <span id="user-seeds">{{ current_user.seeds }}</span>
             <span>Seeds</span>
         </div>
@@ -615,7 +629,7 @@
                         <span>{{ rarity_multipliers[bird.rarity] }}x</span>
                     </div>
                     <div class="stat-item">
-                        <span>🌱</span>
+                        <span><img src="{{ url_for('static', filename='images/seeds.png') }}" alt="Seeds" class="icon-seeds"></span>
                         <span>{{ bird.price }}</span>
                     </div>
                 </div>
@@ -642,12 +656,12 @@
 
                     {% if not bird.owned.shiny %}
                     <button class="btn btn-shiny" onclick="buyBird({{ bird.id }})" {% if current_user.seeds < bird.price %}disabled{% endif %}>
-                        ✨ Try for Shiny ({{ bird.price }} 🌱)
+                        ✨ Try for Shiny ({{ bird.price }} <img src="{{ url_for('static', filename='images/seeds.png') }}" alt="Seeds" class="icon-seeds">)
                     </button>
                     {% endif %}
                 {% else %}
                     <button class="btn btn-buy" onclick="buyBird({{ bird.id }})" {% if current_user.seeds < bird.price %}disabled{% endif %}>
-                        🛒 Buy for {{ bird.price }} 🌱
+                        🛒 Buy for {{ bird.price }} <img src="{{ url_for('static', filename='images/seeds.png') }}" alt="Seeds" class="icon-seeds">
                     </button>
                 {% endif %}
             </div>

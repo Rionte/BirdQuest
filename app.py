@@ -548,7 +548,7 @@ def complete_habit():
         current_user.xp -= xp_needed
         current_user.level += 1
         multiplier = get_user_multiplier(current_user)
-        seeds_earned = int(SEEDS_PER_LEVEL * multiplier)
+        seeds_earned = int((SEEDS_PER_LEVEL + current_user.level * 5) * multiplier)
         current_user.seeds += seeds_earned
         leveled_up = True
 

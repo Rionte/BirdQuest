@@ -277,9 +277,9 @@ function updateTotalHabitsCount() {
 // Delete Habit
 // ===================================
 async function deleteHabit(habitId) {
-  if (!confirm("Are you sure you want to delete this habit?")) {
+  /* if (!confirm("Are you sure you want to delete this habit?")) {
     return;
-  }
+  } */
 
   try {
     const response = await fetch("/api/delete-habit", {

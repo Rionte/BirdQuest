@@ -90,6 +90,14 @@
                             <span class="nav-icon">🏪</span> Shop
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a
+                            href="{{ url_for('leaderboard') }}"
+                            class="nav-link {% if request.endpoint == 'leaderboard' %}active{% endif %}"
+                        >
+                            <span class="nav-icon">🏆</span> Leaderboard
+                        </a>
+                    </li>
                     <li class="nav-item nav-user-info">
                         <span class="user-seeds"
                             ><img
@@ -112,6 +120,14 @@
                         </a>
                     </li>
                     {% else %}
+                    <li class="nav-item">
+                        <a
+                            href="{{ url_for('leaderboard') }}"
+                            class="nav-link {% if request.endpoint == 'leaderboard' %}active{% endif %}"
+                        >
+                            <span class="nav-icon">🏆</span> Leaderboard
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a
                             href="{{ url_for('login') }}"

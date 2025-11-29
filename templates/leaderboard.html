@@ -1,0 +1,367 @@
+{% extends "base.html" %}
+
+{% block title %}Leaderboard - BirdQuest{% endblock %}
+
+{% block extra_css %}
+<style>
+    .leaderboard-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .leaderboard-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .leaderboard-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1a202c;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .leaderboard-subtitle {
+        color: #718096;
+        font-size: 1.1rem;
+    }
+
+    .your-rank-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 16px;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .your-rank-card .rank-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+    }
+
+    .your-rank-card .rank-label {
+        font-size: 1rem;
+        opacity: 0.9;
+    }
+
+    .leaderboard-table {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .leaderboard-row {
+        display: grid;
+        grid-template-columns: 60px 1fr 100px 100px 80px;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #e2e8f0;
+        transition: background-color 0.2s ease;
+    }
+
+    .leaderboard-row:last-child {
+        border-bottom: none;
+    }
+
+    .leaderboard-row:hover {
+        background-color: #f7fafc;
+    }
+
+    .leaderboard-row.current-user {
+        background: linear-gradient(135deg, #ebf8ff 0%, #e6fffa 100%);
+    }
+
+    .leaderboard-row.header {
+        background: #f7fafc;
+        font-weight: 600;
+        color: #718096;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .leaderboard-row.header:hover {
+        background: #f7fafc;
+    }
+
+    .rank-cell {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #2d3748;
+    }
+
+    .rank-cell.gold {
+        color: #d69e2e;
+        font-size: 1.5rem;
+    }
+
+    .rank-cell.silver {
+        color: #a0aec0;
+        font-size: 1.3rem;
+    }
+
+    .rank-cell.bronze {
+        color: #c77b30;
+        font-size: 1.2rem;
+    }
+
+    .user-cell {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .user-bird {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #f7fafc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border: 2px solid #e2e8f0;
+    }
+
+    .user-bird.shiny {
+        border-color: #d69e2e;
+        box-shadow: 0 0 10px rgba(214, 158, 46, 0.3);
+    }
+
+    .user-bird img {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+    }
+
+    .user-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .user-name {
+        font-weight: 600;
+        color: #2d3748;
+    }
+
+    .user-bird-name {
+        font-size: 0.75rem;
+        color: #a0aec0;
+    }
+
+    .level-cell {
+        text-align: center;
+    }
+
+    .level-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .xp-cell {
+        text-align: center;
+        color: #718096;
+        font-size: 0.9rem;
+    }
+
+    .streak-cell {
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.25rem;
+        color: #ed8936;
+        font-weight: 600;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: #718096;
+    }
+
+    .empty-state-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .login-prompt {
+        background: #f7fafc;
+        padding: 1.5rem;
+        border-radius: 12px;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .login-prompt p {
+        color: #718096;
+        margin-bottom: 1rem;
+    }
+
+    .login-prompt .btn {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .login-prompt .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    @media (max-width: 768px) {
+        .leaderboard-container {
+            padding: 1rem;
+        }
+
+        .leaderboard-title {
+            font-size: 1.8rem;
+        }
+
+        .leaderboard-row {
+            grid-template-columns: 50px 1fr 70px 70px;
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .leaderboard-row .streak-cell {
+            display: none;
+        }
+
+        .leaderboard-row.header .streak-cell {
+            display: none;
+        }
+
+        .user-bird {
+            width: 35px;
+            height: 35px;
+        }
+
+        .user-bird img {
+            width: 25px;
+            height: 25px;
+        }
+
+        .level-badge {
+            padding: 0.2rem 0.5rem;
+            font-size: 0.8rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .leaderboard-row {
+            grid-template-columns: 40px 1fr 60px;
+        }
+
+        .leaderboard-row .xp-cell {
+            display: none;
+        }
+
+        .leaderboard-row.header .xp-cell {
+            display: none;
+        }
+
+        .your-rank-card {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="leaderboard-container">
+    <header class="leaderboard-header">
+        <h1 class="leaderboard-title">🏆 Leaderboard</h1>
+        <p class="leaderboard-subtitle">Top players ranked by level</p>
+    </header>
+
+    {% if current_user.is_authenticated and current_user_rank %}
+    <div class="your-rank-card">
+        <div>
+            <div class="rank-label">Your Rank</div>
+            <div class="rank-number">#{{ current_user_rank }}</div>
+        </div>
+        <div>
+            <div class="rank-label">Level {{ current_user.level }}</div>
+            <div>{{ current_user.xp }} XP • 🔥 {{ current_user.streak }} streak</div>
+        </div>
+    </div>
+    {% elif not current_user.is_authenticated %}
+    <div class="login-prompt">
+        <p>Login to see your rank and compete with others!</p>
+        <a href="{{ url_for('login') }}" class="btn">Login Now</a>
+    </div>
+    {% endif %}
+
+    <div class="leaderboard-table">
+        <div class="leaderboard-row header">
+            <div class="rank-cell">Rank</div>
+            <div class="user-cell">Player</div>
+            <div class="level-cell">Level</div>
+            <div class="xp-cell">XP</div>
+            <div class="streak-cell">Streak</div>
+        </div>
+
+        {% if leaderboard %}
+            {% for player in leaderboard %}
+            <div class="leaderboard-row {% if player.is_current_user %}current-user{% endif %}">
+                <div class="rank-cell {% if player.rank == 1 %}gold{% elif player.rank == 2 %}silver{% elif player.rank == 3 %}bronze{% endif %}">
+                    {% if player.rank == 1 %}
+                        👑
+                    {% elif player.rank == 2 %}
+                        🥈
+                    {% elif player.rank == 3 %}
+                        🥉
+                    {% else %}
+                        {{ player.rank }}
+                    {% endif %}
+                </div>
+                <div class="user-cell">
+                    <div class="user-bird {% if player.is_shiny %}shiny{% endif %}">
+                        <img src="{{ url_for('static', filename='images/' ~ player.bird.image) }}" alt="{{ player.bird.name }}">
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">{{ player.username }}{% if player.is_current_user %} (You){% endif %}</span>
+                        <span class="user-bird-name">{% if player.is_shiny %}✨ {% endif %}{{ player.bird.name }}</span>
+                    </div>
+                </div>
+                <div class="level-cell">
+                    <span class="level-badge">⭐ {{ player.level }}</span>
+                </div>
+                <div class="xp-cell">{{ player.xp }} XP</div>
+                <div class="streak-cell">🔥 {{ player.streak }}</div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-state-icon">🦅</div>
+                <p>No players yet. Be the first to join!</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

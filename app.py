@@ -473,6 +473,46 @@ def logout():
     return redirect(url_for("home"))
 
 
+@app.route("/leaderboard")
+def leaderboard():
+    # Get top 50 users by level, then by XP as tiebreaker
+    top_users = User.query.order_by(User.level.desc(), User.xp.desc()).limit(50).all()
+
+    # Build leaderboard data with rank and bird info
+    leaderboard_data = []
+    for rank, user in enumerate(top_users, 1):
+        bird = get_bird_by_id(user.current_bird_id)
+        leaderboard_data.append(
+            {
+                "rank": rank,
+                "username": user.username,
+                "level": user.level,
+                "xp": user.xp,
+                "streak": user.streak,
+                "bird": bird,
+                "is_shiny": user.current_bird_shiny,
+                "is_current_user": current_user.is_authenticated
+                and user.id == current_user.id,
+            }
+        )
+
+    # Get current user's rank if logged in
+    current_user_rank = None
+    if current_user.is_authenticated:
+        # Count users with higher level or same level but more XP
+        higher_count = User.query.filter(
+            (User.level > current_user.level)
+            | ((User.level == current_user.level) & (User.xp > current_user.xp))
+        ).count()
+        current_user_rank = higher_count + 1
+
+    return render_template(
+        "leaderboard.html",
+        leaderboard=leaderboard_data,
+        current_user_rank=current_user_rank,
+    )
+
+
 @app.route("/dashboard")
 @login_required
 def dashboard():

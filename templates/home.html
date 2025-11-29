@@ -69,12 +69,18 @@
                         >Dashboard</a
                     >
                     <a href="{{ url_for('shop') }}" class="nav-link">Shop</a>
+                    <a href="{{ url_for('leaderboard') }}" class="nav-link"
+                        >🏆 Leaderboard</a
+                    >
                     <a
                         href="{{ url_for('logout') }}"
                         class="nav-link btn-outline"
                         >Logout</a
                     >
                     {% else %}
+                    <a href="{{ url_for('leaderboard') }}" class="nav-link"
+                        >🏆 Leaderboard</a
+                    >
                     <a href="{{ url_for('login') }}" class="nav-link">Login</a>
                     <a
                         href="{{ url_for('register') }}"

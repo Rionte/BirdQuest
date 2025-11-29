@@ -1,10 +1,8 @@
-# 🐦 BirdQuest
+# BirdQuest
 
 **Level up your habits, grow your flock!**
 
 BirdQuest is a gamified habit-tracking and productivity app designed for students. Complete real-life tasks, earn XP, level up, and collect beautiful birds along the way!
-
-![BirdQuest Banner](static/images/favicon.svg)
 
 ## ✨ Features
 
@@ -166,17 +164,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Designed with students in mind
-- Inspired by gamification principles
-- Built with ❤️ for productivity
-
----
-
-**Start your journey today and watch your productivity soar! 🐦✨**

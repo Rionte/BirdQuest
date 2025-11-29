@@ -15,10 +15,12 @@ from flask import (
 from flask_login import (
     LoginManager,
     UserMixin,
-    current_user,
     login_required,
     login_user,
     logout_user,
+)
+from flask_login import (
+    current_user as _current_user,
 )
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -234,6 +236,10 @@ class User(UserMixin, db.Model):
     owned_birds = db.relationship("OwnedBird", backref="owner", lazy=True)
     completed_habits = db.relationship("CompletedHabit", backref="user", lazy=True)
     custom_habits = db.relationship("CustomHabit", backref="user", lazy=True)
+
+
+# Type alias for current_user to help IDE recognize User model attributes
+current_user: User = _current_user  # type: ignore[assignment]
 
 
 class OwnedBird(db.Model):
@@ -452,6 +458,21 @@ def shop():
             owned_dict[key]["shiny"] = True
         else:
             owned_dict[key]["normal"] = True
+
+    # Ensure current equipped bird is shown as owned
+    if current_user.current_bird_id and current_user.current_bird_id not in owned_dict:
+        owned_dict[current_user.current_bird_id] = {
+            "normal": not current_user.current_bird_shiny,
+            "shiny": current_user.current_bird_shiny,
+        }
+        # Also add to database if missing
+        new_owned = OwnedBird(
+            user_id=current_user.id,
+            bird_id=current_user.current_bird_id,
+            is_shiny=current_user.current_bird_shiny,
+        )
+        db.session.add(new_owned)
+        db.session.commit()
 
     birds_with_prices = []
     for bird in AVAILABLE_BIRDS:

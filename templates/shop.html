@@ -4,92 +4,138 @@
 
 {% block extra_css %}
 <style>
+    /* Shop Container */
     .shop-container {
-        max-width: 1400px;
+        max-width: 1200px;
         margin: 0 auto;
         padding: 2rem;
     }
 
+    /* Header */
     .shop-header {
         text-align: center;
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
     }
 
-    .shop-header h1 {
+    .shop-title {
         font-size: 2.5rem;
-        color: #2d3748;
+        font-weight: 700;
+        color: #1a202c;
         margin-bottom: 0.5rem;
     }
 
-    .shop-header p {
+    .shop-subtitle {
         color: #718096;
         font-size: 1.1rem;
     }
 
-    .user-currency {
+    /* Seeds Display */
+    .seeds-display {
         display: flex;
+        align-items: center;
         justify-content: center;
-        gap: 2rem;
-        margin-top: 1rem;
-    }
-
-    .currency-item {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        gap: 0.5rem;
+        background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
         color: white;
         padding: 0.75rem 1.5rem;
         border-radius: 50px;
         font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        font-size: 1.2rem;
+        margin: 1.5rem auto;
+        width: fit-content;
+        box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
     }
 
-    .currency-item.seeds {
-        background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
-        box-shadow: 0 4px 15px rgba(86, 171, 47, 0.4);
+    .seeds-display img {
+        width: 24px;
+        height: 24px;
     }
 
-    /* Rarity Filter Tabs */
-    .rarity-tabs {
+    /* Multiplier Info */
+    .multiplier-section {
+        background: white;
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .multiplier-title {
+        text-align: center;
+        font-size: 1rem;
+        color: #718096;
+        margin-bottom: 1rem;
+    }
+
+    .multiplier-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .multiplier-item {
+        padding: 0.75rem;
+        border-radius: 12px;
+        background: #f7fafc;
+    }
+
+    .multiplier-item.common { background: linear-gradient(135deg, #f7fafc 0%, #e2e8f0 100%); }
+    .multiplier-item.uncommon { background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%); }
+    .multiplier-item.rare { background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%); }
+    .multiplier-item.epic { background: linear-gradient(135deg, #faf5ff 0%, #e9d8fd 100%); }
+    .multiplier-item.legendary { background: linear-gradient(135deg, #fffff0 0%, #fefcbf 100%); }
+
+    .multiplier-label {
+        font-size: 0.75rem;
+        color: #718096;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .multiplier-value {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #2d3748;
+    }
+
+    /* Filter Tabs */
+    .filter-tabs {
         display: flex;
         justify-content: center;
+        flex-wrap: wrap;
         gap: 0.5rem;
         margin-bottom: 2rem;
-        flex-wrap: wrap;
     }
 
-    .rarity-tab {
-        padding: 0.6rem 1.2rem;
-        border: none;
-        border-radius: 25px;
-        cursor: pointer;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        background: #e2e8f0;
+    .filter-tab {
+        padding: 0.6rem 1.25rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 50px;
+        background: white;
         color: #4a5568;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
     }
 
-    .rarity-tab:hover {
-        transform: translateY(-2px);
+    .filter-tab:hover {
+        border-color: #667eea;
+        color: #667eea;
     }
 
-    .rarity-tab.active {
+    .filter-tab.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-color: transparent;
         color: white;
     }
-
-    .rarity-tab[data-rarity="all"].active { background: linear-gradient(135deg, #667eea, #764ba2); }
-    .rarity-tab[data-rarity="common"].active { background: #a0aec0; }
-    .rarity-tab[data-rarity="uncommon"].active { background: #68d391; }
-    .rarity-tab[data-rarity="rare"].active { background: #63b3ed; }
-    .rarity-tab[data-rarity="epic"].active { background: #b794f4; }
-    .rarity-tab[data-rarity="legendary"].active { background: linear-gradient(135deg, #f6d365, #fda085); }
 
     /* Birds Grid */
     .birds-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 1.5rem;
+        justify-content: center;
     }
 
     /* Bird Card */
@@ -99,207 +145,126 @@
         overflow: hidden;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
         position: relative;
     }
 
     .bird-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
     }
 
     .bird-card.owned {
-        border: 3px solid #48bb78;
+        border: 2px solid #48bb78;
     }
 
     .bird-card.equipped {
-        border: 3px solid #667eea;
-        box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        border: 2px solid #667eea;
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
     }
 
-    /* Bird Image Container */
+    /* Rarity Badge */
+    .rarity-badge {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        padding: 0.35rem 0.75rem;
+        border-radius: 50px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        z-index: 10;
+    }
+
+    .rarity-badge.common { background: #e2e8f0; color: #4a5568; }
+    .rarity-badge.uncommon { background: #c6f6d5; color: #276749; }
+    .rarity-badge.rare { background: #bee3f8; color: #2b6cb0; }
+    .rarity-badge.epic { background: #e9d8fd; color: #6b46c1; }
+    .rarity-badge.legendary { background: #fefcbf; color: #975a16; }
+
+    /* Owned Badge */
+    .owned-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.35rem 0.75rem;
+        border-radius: 50px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        background: #48bb78;
+        color: white;
+        z-index: 10;
+    }
+
+    .equipped-badge {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    /* Bird Image */
     .bird-image-container {
-        position: relative;
         height: 180px;
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
         overflow: hidden;
     }
 
-    /* Rarity Background Effects */
     .bird-card[data-rarity="common"] .bird-image-container {
-        background: linear-gradient(135deg, #f7fafc 0%, #e2e8f0 100%);
+        background: linear-gradient(180deg, #f7fafc 0%, #edf2f7 100%);
     }
-
     .bird-card[data-rarity="uncommon"] .bird-image-container {
-        background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+        background: linear-gradient(180deg, #f0fff4 0%, #c6f6d5 100%);
     }
-
     .bird-card[data-rarity="rare"] .bird-image-container {
-        background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+        background: linear-gradient(180deg, #ebf8ff 0%, #bee3f8 100%);
     }
-
     .bird-card[data-rarity="epic"] .bird-image-container {
-        background: linear-gradient(135deg, #faf5ff 0%, #e9d8fd 100%);
+        background: linear-gradient(180deg, #faf5ff 0%, #e9d8fd 100%);
     }
-
     .bird-card[data-rarity="legendary"] .bird-image-container {
-        background: linear-gradient(135deg, #fffff0 0%, #fefcbf 100%);
-    }
-
-    .bird-emoji {
-        font-size: 5rem;
-        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-        transition: transform 0.3s ease;
-        z-index: 2;
-    }
-
-    .bird-card:hover .bird-emoji {
-        transform: scale(1.1);
+        background: linear-gradient(180deg, #fffff0 0%, #fefcbf 100%);
     }
 
     .bird-img {
-        max-width: 140px;
-        max-height: 140px;
-        width: auto;
-        height: auto;
+        max-width: 130px;
+        max-height: 130px;
         object-fit: contain;
-        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
         transition: transform 0.3s ease;
-        z-index: 2;
     }
 
     .bird-card:hover .bird-img {
         transform: scale(1.1);
     }
 
-    /* Shiny Effect */
+    /* Shiny Effects */
     .bird-card.shiny .bird-image-container::before {
         content: '';
         position: absolute;
         inset: 0;
-        background: linear-gradient(
-            45deg,
-            transparent 30%,
-            rgba(255, 215, 0, 0.3) 50%,
-            transparent 70%
-        );
+        background: linear-gradient(45deg, transparent 30%, rgba(255, 215, 0, 0.2) 50%, transparent 70%);
         animation: shimmer 2s infinite;
     }
-
-    .bird-card.shiny .bird-emoji {
-        filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
-    }
-
-    .bird-card.shiny::after {
-        content: '✨';
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 1.5rem;
-        animation: sparkle 1s infinite;
-    }
-
-    /* Golden circle outline for shiny */
-    .shiny-ring {
-        position: absolute;
-        width: 120px;
-        height: 120px;
-        border: 3px solid gold;
-        border-radius: 50%;
-        animation: pulse-ring 2s infinite;
-        box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-    }
-
-    /* Sparkles for shiny */
-    .sparkles {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        overflow: hidden;
-    }
-
-    .sparkle {
-        position: absolute;
-        width: 8px;
-        height: 8px;
-        background: gold;
-        border-radius: 50%;
-        animation: float-sparkle 2s infinite;
-    }
-
-    .sparkle:nth-child(1) { left: 20%; top: 20%; animation-delay: 0s; }
-    .sparkle:nth-child(2) { left: 70%; top: 30%; animation-delay: 0.3s; }
-    .sparkle:nth-child(3) { left: 30%; top: 70%; animation-delay: 0.6s; }
-    .sparkle:nth-child(4) { left: 80%; top: 60%; animation-delay: 0.9s; }
-    .sparkle:nth-child(5) { left: 50%; top: 10%; animation-delay: 1.2s; }
 
     @keyframes shimmer {
         0% { transform: translateX(-100%); }
         100% { transform: translateX(100%); }
     }
 
-    @keyframes sparkle {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.5; transform: scale(1.2); }
-    }
-
-    @keyframes pulse-ring {
-        0%, 100% { transform: scale(1); opacity: 1; }
-        50% { transform: scale(1.05); opacity: 0.8; }
-    }
-
-    @keyframes float-sparkle {
-        0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
-        50% { transform: translateY(-10px) scale(0.8); opacity: 0.5; }
-    }
-
-    /* Rarity Badge */
-    .rarity-badge {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        padding: 0.3rem 0.8rem;
-        border-radius: 15px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        color: white;
-        z-index: 5;
-    }
-
-    .rarity-badge.common { background: #a0aec0; }
-    .rarity-badge.uncommon { background: #68d391; }
-    .rarity-badge.rare { background: #63b3ed; }
-    .rarity-badge.epic { background: #b794f4; }
-    .rarity-badge.legendary { background: linear-gradient(135deg, #f6d365, #fda085); }
-
-    /* Owned Badge */
-    .owned-badge {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: #48bb78;
-        color: white;
-        padding: 0.3rem 0.8rem;
-        border-radius: 15px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        z-index: 5;
-    }
-
-    .equipped-badge {
-        background: #667eea;
-    }
-
     /* Bird Info */
     .bird-info {
         padding: 1.25rem;
+        text-align: center;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
     }
 
     .bird-name {
-        font-size: 1.25rem;
-        font-weight: 700;
+        font-size: 1.2rem;
+        font-weight: 600;
         color: #2d3748;
         margin-bottom: 0.5rem;
     }
@@ -308,51 +273,46 @@
         color: #718096;
         font-size: 0.9rem;
         margin-bottom: 1rem;
-        line-height: 1.4;
+        flex-grow: 1;
     }
 
     .bird-stats {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-top: 1rem;
+        justify-content: center;
+        gap: 1.5rem;
+        padding-top: 0.75rem;
         border-top: 1px solid #e2e8f0;
     }
 
-    .bird-multiplier {
+    .stat-item {
         display: flex;
         align-items: center;
-        gap: 0.3rem;
-        color: #667eea;
-        font-weight: 600;
+        gap: 0.4rem;
         font-size: 0.9rem;
+        color: #4a5568;
     }
 
-    .bird-price {
-        display: flex;
-        align-items: center;
-        gap: 0.3rem;
-        font-weight: 700;
-        color: #48bb78;
-    }
-
-    /* Action Buttons */
+    /* Bird Actions */
     .bird-actions {
-        padding: 0 1.25rem 1.25rem;
+        padding: 1rem 1.25rem 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
     }
 
-    .btn-buy, .btn-equip {
-        width: 100%;
-        padding: 0.75rem;
-        border: none;
-        border-radius: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
+    .btn {
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: none;
+        width: 100%;
     }
 
     .btn-buy {
@@ -366,9 +326,9 @@
     }
 
     .btn-buy:disabled {
-        background: #e2e8f0;
-        color: #a0aec0;
+        background: #cbd5e0;
         cursor: not-allowed;
+        opacity: 0.7;
     }
 
     .btn-equip {
@@ -392,11 +352,21 @@
         box-shadow: none;
     }
 
+    .btn-shiny {
+        background: linear-gradient(135deg, #d69e2e 0%, #ecc94b 100%);
+        color: white;
+    }
+
+    .btn-shiny:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(214, 158, 46, 0.4);
+    }
+
     /* Shiny Toggle */
     .shiny-toggle {
         display: flex;
         gap: 0.5rem;
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.5rem;
     }
 
     .shiny-toggle button {
@@ -405,118 +375,79 @@
         border: 2px solid #e2e8f0;
         border-radius: 8px;
         background: white;
+        color: #4a5568;
+        font-weight: 500;
         cursor: pointer;
-        font-size: 0.85rem;
-        font-weight: 600;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
+    }
+
+    .shiny-toggle button:hover {
+        border-color: #667eea;
     }
 
     .shiny-toggle button.active {
-        border-color: #667eea;
-        background: #ebf4ff;
-        color: #667eea;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-color: transparent;
+        color: white;
     }
 
-    .shiny-toggle button.shiny-btn.active {
-        border-color: gold;
-        background: #fffbeb;
-        color: #d69e2e;
+    .shiny-toggle .shiny-btn.active {
+        background: linear-gradient(135deg, #d69e2e 0%, #ecc94b 100%);
     }
 
-    /* Multiplier Info Box */
-    .multiplier-info {
-        background: linear-gradient(135deg, #ebf4ff 0%, #e9d8fd 100%);
-        border-radius: 15px;
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-    }
-
-    .multiplier-info h3 {
-        color: #553c9a;
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .multiplier-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 0.75rem;
-    }
-
-    .multiplier-item {
-        background: white;
-        padding: 0.75rem;
-        border-radius: 10px;
-        text-align: center;
-        font-size: 0.85rem;
-    }
-
-    .multiplier-item .rarity-name {
-        font-weight: 600;
-        margin-bottom: 0.25rem;
-    }
-
-    .multiplier-item .multiplier-value {
-        color: #667eea;
-        font-weight: 700;
-    }
-
-    .multiplier-item.shiny {
-        background: linear-gradient(135deg, #fefcbf 0%, #faf089 100%);
-    }
-
-    /* Modal */
+    /* Purchase Modal */
     .modal-overlay {
-        display: none;
         position: fixed;
         inset: 0;
         background: rgba(0, 0, 0, 0.6);
-        z-index: 1000;
+        display: flex;
         align-items: center;
         justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
         backdrop-filter: blur(4px);
     }
 
     .modal-overlay.active {
-        display: flex;
+        opacity: 1;
+        visibility: visible;
     }
 
     .modal-content {
         background: white;
-        border-radius: 20px;
-        padding: 2rem;
+        padding: 2.5rem;
+        border-radius: 24px;
+        text-align: center;
         max-width: 400px;
         width: 90%;
-        text-align: center;
-        animation: modalSlideIn 0.3s ease;
+        transform: scale(0.9);
+        transition: transform 0.3s ease;
     }
 
-    @keyframes modalSlideIn {
-        from {
-            opacity: 0;
-            transform: scale(0.9) translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-        }
+    .modal-overlay.active .modal-content {
+        transform: scale(1);
     }
 
     .modal-bird-display {
-        font-size: 6rem;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
     }
 
-    .modal-content.shiny .modal-bird-display {
+    .modal-bird-display img {
+        max-width: 150px;
+        max-height: 150px;
+        object-fit: contain;
+    }
+
+    .modal-content.shiny .modal-bird-display img {
         filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
-        animation: shiny-glow 1s infinite alternate;
+        animation: shiny-pulse 1s infinite alternate;
     }
 
-    @keyframes shiny-glow {
-        from { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5)); }
-        to { filter: drop-shadow(0 0 25px rgba(255, 215, 0, 1)); }
+    @keyframes shiny-pulse {
+        from { filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6)); }
+        to { filter: drop-shadow(0 0 30px rgba(255, 215, 0, 1)); }
     }
 
     .modal-title {
@@ -526,29 +457,30 @@
         margin-bottom: 0.5rem;
     }
 
+    .modal-shiny-alert {
+        background: linear-gradient(135deg, #d69e2e 0%, #ecc94b 100%);
+        color: white;
+        padding: 0.75rem 1rem;
+        border-radius: 12px;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
     .modal-message {
         color: #718096;
         margin-bottom: 1.5rem;
-    }
-
-    .modal-shiny-alert {
-        background: linear-gradient(135deg, #fefcbf 0%, #faf089 100%);
-        padding: 1rem;
-        border-radius: 10px;
-        margin-bottom: 1rem;
-        font-weight: 600;
-        color: #975a16;
     }
 
     .modal-btn {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         border: none;
-        padding: 0.75rem 2rem;
-        border-radius: 25px;
+        padding: 0.875rem 2rem;
+        border-radius: 12px;
         font-weight: 600;
+        font-size: 1rem;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
     }
 
     .modal-btn:hover {
@@ -559,7 +491,7 @@
     /* Empty State */
     .empty-state {
         text-align: center;
-        padding: 4rem 2rem;
+        padding: 3rem;
         color: #718096;
     }
 
@@ -574,18 +506,28 @@
             padding: 1rem;
         }
 
-        .shop-header h1 {
-            font-size: 1.8rem;
+        .shop-title {
+            font-size: 2rem;
         }
 
-        .user-currency {
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
+        .birds-grid {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
         }
 
-        .multiplier-info {
-            padding: 1rem;
+        .multiplier-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .filter-tabs {
+            gap: 0.4rem;
+        }
+
+        .filter-tab {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
         }
 
         .birds-grid {
@@ -597,122 +539,82 @@
 
 {% block content %}
 <div class="shop-container">
-    <div class="shop-header">
-        <h1>🏪 Bird Shop</h1>
-        <p>Spend your hard-earned seeds to unlock amazing birds!</p>
-        <div class="user-currency">
-            <div class="currency-item seeds">
-                <span>🌱</span>
-                <span id="user-seeds">{{ current_user.seeds }}</span> Seeds
-            </div>
-            <div class="currency-item">
-                <span>⭐</span>
-                Level {{ current_user.level }}
-            </div>
+    <!-- Header -->
+    <header class="shop-header">
+        <h1 class="shop-title">🐦 Bird Shop</h1>
+        <p class="shop-subtitle">Collect birds to boost your seed earnings!</p>
+        <div class="seeds-display">
+            <span>🌱</span>
+            <span id="user-seeds">{{ current_user.seeds }}</span>
+            <span>Seeds</span>
         </div>
-    </div>
+    </header>
 
     <!-- Multiplier Info -->
-    <div class="multiplier-info">
-        <h3>📊 Seed Multipliers by Rarity</h3>
+    <section class="multiplier-section">
+        <h3 class="multiplier-title">Seed Multipliers by Rarity</h3>
         <div class="multiplier-grid">
-            <div class="multiplier-item">
-                <div class="rarity-name" style="color: #a0aec0;">Common</div>
+            <div class="multiplier-item common">
+                <div class="multiplier-label">Common</div>
                 <div class="multiplier-value">1.0x</div>
             </div>
-            <div class="multiplier-item shiny">
-                <div class="rarity-name" style="color: #d69e2e;">✨ Common Shiny</div>
-                <div class="multiplier-value">1.5x</div>
-            </div>
-            <div class="multiplier-item">
-                <div class="rarity-name" style="color: #48bb78;">Uncommon</div>
+            <div class="multiplier-item uncommon">
+                <div class="multiplier-label">Uncommon</div>
                 <div class="multiplier-value">1.2x</div>
             </div>
-            <div class="multiplier-item shiny">
-                <div class="rarity-name" style="color: #d69e2e;">✨ Uncommon Shiny</div>
-                <div class="multiplier-value">1.8x</div>
-            </div>
-            <div class="multiplier-item">
-                <div class="rarity-name" style="color: #4299e1;">Rare</div>
+            <div class="multiplier-item rare">
+                <div class="multiplier-label">Rare</div>
                 <div class="multiplier-value">1.5x</div>
             </div>
-            <div class="multiplier-item shiny">
-                <div class="rarity-name" style="color: #d69e2e;">✨ Rare Shiny</div>
-                <div class="multiplier-value">2.3x</div>
-            </div>
-            <div class="multiplier-item">
-                <div class="rarity-name" style="color: #9f7aea;">Epic</div>
-                <div class="multiplier-value">1.7x</div>
-            </div>
-            <div class="multiplier-item shiny">
-                <div class="rarity-name" style="color: #d69e2e;">✨ Epic Shiny</div>
-                <div class="multiplier-value">2.7x</div>
-            </div>
-            <div class="multiplier-item">
-                <div class="rarity-name" style="color: #ed8936;">Legendary</div>
+            <div class="multiplier-item epic">
+                <div class="multiplier-label">Epic</div>
                 <div class="multiplier-value">2.0x</div>
             </div>
-            <div class="multiplier-item shiny">
-                <div class="rarity-name" style="color: #d69e2e;">✨ Legendary Shiny</div>
-                <div class="multiplier-value">4.0x</div>
+            <div class="multiplier-item legendary">
+                <div class="multiplier-label">Legendary</div>
+                <div class="multiplier-value">3.0x</div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Rarity Filter Tabs -->
-    <div class="rarity-tabs">
-        <button class="rarity-tab active" data-rarity="all">All Birds</button>
-        <button class="rarity-tab" data-rarity="common">Common</button>
-        <button class="rarity-tab" data-rarity="uncommon">Uncommon</button>
-        <button class="rarity-tab" data-rarity="rare">Rare</button>
-        <button class="rarity-tab" data-rarity="epic">Epic</button>
-        <button class="rarity-tab" data-rarity="legendary">Legendary</button>
+    <!-- Filter Tabs -->
+    <div class="filter-tabs">
+        <button class="filter-tab active" data-rarity="all">All Birds</button>
+        <button class="filter-tab" data-rarity="common">Common</button>
+        <button class="filter-tab" data-rarity="uncommon">Uncommon</button>
+        <button class="filter-tab" data-rarity="rare">Rare</button>
+        <button class="filter-tab" data-rarity="epic">Epic</button>
+        <button class="filter-tab" data-rarity="legendary">Legendary</button>
     </div>
 
     <!-- Birds Grid -->
     <div class="birds-grid" id="birds-grid">
         {% for bird in birds %}
-        <div class="bird-card {% if bird.owned.normal or bird.owned.shiny %}owned{% endif %} {% if current_user.current_bird_id == bird.id %}equipped{% endif %}"
+        <div class="bird-card {% if bird.owned.shiny %}shiny{% endif %} {% if bird.owned.normal or bird.owned.shiny %}owned{% endif %} {% if current_user.current_bird_id == bird.id %}equipped{% endif %}"
              data-rarity="{{ bird.rarity }}"
-             data-bird-id="{{ bird.id }}"
-             data-owned-normal="{{ 'true' if bird.owned.normal else 'false' }}"
-             data-owned-shiny="{{ 'true' if bird.owned.shiny else 'false' }}">
+             data-bird-id="{{ bird.id }}">
 
             <div class="rarity-badge {{ bird.rarity }}">{{ bird.rarity }}</div>
 
             {% if bird.owned.normal or bird.owned.shiny %}
             <div class="owned-badge {% if current_user.current_bird_id == bird.id %}equipped-badge{% endif %}">
-                {% if current_user.current_bird_id == bird.id %}
-                    ⭐ EQUIPPED
-                {% else %}
-                    ✓ OWNED
-                {% endif %}
+                {% if current_user.current_bird_id == bird.id %}⭐ EQUIPPED{% else %}✓ OWNED{% endif %}
             </div>
             {% endif %}
 
             <div class="bird-image-container">
                 <img src="{{ url_for('static', filename='images/' ~ bird.image) }}" alt="{{ bird.name }}" class="bird-img">
-                {% if bird.owned.shiny %}
-                <div class="shiny-ring"></div>
-                <div class="sparkles">
-                    <div class="sparkle"></div>
-                    <div class="sparkle"></div>
-                    <div class="sparkle"></div>
-                    <div class="sparkle"></div>
-                    <div class="sparkle"></div>
-                </div>
-                {% endif %}
             </div>
 
             <div class="bird-info">
                 <h3 class="bird-name">{{ bird.name }}</h3>
                 <p class="bird-description">{{ bird.description }}</p>
                 <div class="bird-stats">
-                    <div class="bird-multiplier">
+                    <div class="stat-item">
                         <span>📈</span>
-                        <span>{{ rarity_multipliers[bird.rarity] }}x Seeds</span>
+                        <span>{{ rarity_multipliers[bird.rarity] }}x</span>
                     </div>
-                    <div class="bird-price">
+                    <div class="stat-item">
                         <span>🌱</span>
                         <span>{{ bird.price }}</span>
                     </div>
@@ -731,26 +633,21 @@
                     {% endif %}
 
                     {% if current_user.current_bird_id == bird.id %}
-                    <button class="btn-equip btn-equipped" disabled>
-                        <span>⭐</span> Currently Equipped
-                    </button>
+                    <button class="btn btn-equipped" disabled>⭐ Currently Equipped</button>
                     {% else %}
-                    <button class="btn-equip" onclick="equipBird({{ bird.id }}, {{ 'true' if bird.owned.shiny and not bird.owned.normal else 'false' }})">
-                        <span>🎯</span> Equip Bird
+                    <button class="btn btn-equip" onclick="equipBird({{ bird.id }}, {{ 'true' if bird.owned.shiny and not bird.owned.normal else 'false' }})">
+                        🎯 Equip Bird
                     </button>
                     {% endif %}
 
                     {% if not bird.owned.shiny %}
-                    <button class="btn-buy" onclick="buyBird({{ bird.id }})"
-                            {% if current_user.seeds < bird.price %}disabled{% endif %}
-                            style="margin-top: 0.5rem; background: linear-gradient(135deg, #d69e2e 0%, #f6e05e 100%);">
-                        <span>✨</span> Try for Shiny ({{ bird.price }} 🌱)
+                    <button class="btn btn-shiny" onclick="buyBird({{ bird.id }})" {% if current_user.seeds < bird.price %}disabled{% endif %}>
+                        ✨ Try for Shiny ({{ bird.price }} 🌱)
                     </button>
                     {% endif %}
                 {% else %}
-                    <button class="btn-buy" onclick="buyBird({{ bird.id }})"
-                            {% if current_user.seeds < bird.price %}disabled{% endif %}>
-                        <span>🛒</span> Buy for {{ bird.price }} 🌱
+                    <button class="btn btn-buy" onclick="buyBird({{ bird.id }})" {% if current_user.seeds < bird.price %}disabled{% endif %}>
+                        🛒 Buy for {{ bird.price }} 🌱
                     </button>
                 {% endif %}
             </div>
@@ -762,7 +659,9 @@
 <!-- Purchase Modal -->
 <div class="modal-overlay" id="purchase-modal">
     <div class="modal-content" id="modal-content">
-        <div class="modal-bird-display" id="modal-bird">🐦</div>
+        <div class="modal-bird-display">
+            <img id="modal-bird" src="" alt="Bird">
+        </div>
         <h2 class="modal-title" id="modal-title">Congratulations!</h2>
         <div class="modal-shiny-alert" id="modal-shiny-alert" style="display: none;">
             ✨ WOW! You got a SHINY version! ✨
@@ -771,20 +670,18 @@
         <button class="modal-btn" onclick="closeModal()">Awesome!</button>
     </div>
 </div>
-{% endblock %}
 
-{% block extra_js %}
 <script>
-    // Rarity filter tabs
-    document.querySelectorAll('.rarity-tab').forEach(tab => {
+    // Filter functionality
+    document.querySelectorAll('.filter-tab').forEach(tab => {
         tab.addEventListener('click', () => {
-            document.querySelectorAll('.rarity-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
 
             const rarity = tab.dataset.rarity;
             document.querySelectorAll('.bird-card').forEach(card => {
                 if (rarity === 'all' || card.dataset.rarity === rarity) {
-                    card.style.display = 'block';
+                    card.style.display = 'flex';
                 } else {
                     card.style.display = 'none';
                 }
@@ -797,19 +694,15 @@
         try {
             const response = await fetch('/api/buy-bird', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ bird_id: birdId }),
             });
 
             const data = await response.json();
 
             if (data.success) {
-                // Update seeds display
                 document.getElementById('user-seeds').textContent = data.seeds;
 
-                // Show modal
                 const modal = document.getElementById('purchase-modal');
                 const modalContent = document.getElementById('modal-content');
                 const modalBird = document.getElementById('modal-bird');
@@ -817,12 +710,12 @@
                 const modalMessage = document.getElementById('modal-message');
                 const shinyAlert = document.getElementById('modal-shiny-alert');
 
-                // Get bird emoji based on card
                 const birdCard = document.querySelector(`[data-bird-id="${birdId}"]`);
-                const birdEmoji = birdCard.querySelector('.bird-emoji').textContent.trim();
+                const birdImg = birdCard.querySelector('.bird-img');
                 const birdName = birdCard.querySelector('.bird-name').textContent;
 
-                modalBird.textContent = birdEmoji;
+                modalBird.src = birdImg.src;
+                modalBird.alt = birdName;
                 modalTitle.textContent = `You got ${birdName}!`;
                 modalMessage.textContent = data.message;
 
@@ -836,10 +729,7 @@
 
                 modal.classList.add('active');
 
-                // Reload page after modal close to update UI
-                setTimeout(() => {
-                    location.reload();
-                }, 2000);
+                setTimeout(() => location.reload(), 2500);
             } else {
                 alert(data.message);
             }
@@ -854,18 +744,13 @@
         try {
             const response = await fetch('/api/equip-bird', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ bird_id: birdId, shiny: useShiny }),
             });
 
             const data = await response.json();
 
             if (data.success) {
-                // Show success message
-                alert(data.message);
-                // Reload page to update UI
                 location.reload();
             } else {
                 alert(data.message);
@@ -876,25 +761,17 @@
         }
     }
 
-    // Close modal function
+    // Close modal
     function closeModal() {
-        const modal = document.getElementById('purchase-modal');
-        modal.classList.remove('active');
+        document.getElementById('purchase-modal').classList.remove('active');
     }
 
-    // Close modal on escape key
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            closeModal();
-        }
+        if (e.key === 'Escape') closeModal();
     });
 
-    // Close modal when clicking backdrop
     document.getElementById('purchase-modal').addEventListener('click', (e) => {
-        if (e.target.classList.contains('modal-overlay')) {
-            closeModal();
-        }
+        if (e.target.classList.contains('modal-overlay')) closeModal();
     });
 </script>
 {% endblock %}
-Escape')

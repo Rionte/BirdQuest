@@ -201,34 +201,34 @@
 <!-- Stats Modal -->
 <div class="modal" id="stats-modal">
     <div class="modal-backdrop" onclick="closeStatsModal()"></div>
-    <div class="modal-content stats-content">
+    <div class="modal-content">
         <div class="modal-header">
             <h2>📊 Your Stats</h2>
             <button class="modal-close" onclick="closeStatsModal()">×</button>
         </div>
         <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-card-icon">🔥</div>
-                <div class="stat-card-value" id="stats-streak">{{ current_user.streak }}</div>
-                <div class="stat-card-label">Current Streak</div>
+            <div class="stats-item">
+                <div class="stats-item-icon">🔥</div>
+                <div class="stats-item-value" id="stats-streak">{{ current_user.streak }}</div>
+                <div class="stats-item-label">Streak</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-card-icon">⭐</div>
-                <div class="stat-card-value" id="stats-level">{{ current_user.level }}</div>
-                <div class="stat-card-label">Level</div>
+            <div class="stats-item">
+                <div class="stats-item-icon">⭐</div>
+                <div class="stats-item-value" id="stats-level">{{ current_user.level }}</div>
+                <div class="stats-item-label">Level</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-card-icon">🌱</div>
-                <div class="stat-card-value" id="stats-seeds">{{ current_user.seeds }}</div>
-                <div class="stat-card-label">Seeds</div>
+            <div class="stats-item">
+                <div class="stats-item-icon">🌱</div>
+                <div class="stats-item-value" id="stats-seeds">{{ current_user.seeds }}</div>
+                <div class="stats-item-label">Seeds</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-card-icon">🐦</div>
-                <div class="stat-card-value" id="stats-birds">-</div>
-                <div class="stat-card-label">Birds Owned</div>
+            <div class="stats-item">
+                <div class="stats-item-icon">🐦</div>
+                <div class="stats-item-value" id="stats-birds">-</div>
+                <div class="stats-item-label">Birds</div>
             </div>
         </div>
-        <div class="weekly-activity">
+        <div class="activity-section">
             <h3>Weekly Activity</h3>
             <div class="activity-chart" id="activity-chart">
                 <!-- Populated by JavaScript -->
@@ -242,9 +242,9 @@
     <div class="level-up-content">
         <div class="level-up-icon">🎉</div>
         <h2>Level Up!</h2>
-        <p class="level-up-text">You reached <span id="new-level">2</span>!</p>
-        <p class="seeds-earned">+<span id="seeds-earned">10</span> 🌱 Seeds</p>
-        <button class="btn btn-primary" onclick="closeLevelUp()">Awesome!</button>
+        <div class="new-level" id="new-level">Level 2</div>
+        <div class="seeds-reward">+<span id="seeds-earned">10</span> 🌱 Seeds Earned!</div>
+        <button class="btn" onclick="closeLevelUp()">Awesome!</button>
     </div>
 </div>
 

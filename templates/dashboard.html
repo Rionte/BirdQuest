@@ -49,23 +49,7 @@
                     <div class="shiny-ring"></div>
                     {% endif %}
                     <div class="bird-image">
-                        {% if bird.name == 'Sparrow' %}🐦
-                        {% elif bird.name == 'Robin' %}🐤
-                        {% elif bird.name == 'Finch' %}🐥
-                        {% elif bird.name == 'Blue Jay' %}💙🐦
-                        {% elif bird.name == 'Cardinal' %}❤️🐦
-                        {% elif bird.name == 'Woodpecker' %}🪶
-                        {% elif bird.name == 'Owl' %}🦉
-                        {% elif bird.name == 'Hawk' %}🦅
-                        {% elif bird.name == 'Falcon' %}🦅
-                        {% elif bird.name == 'Peacock' %}🦚
-                        {% elif bird.name == 'Flamingo' %}🦩
-                        {% elif bird.name == 'Toucan' %}🐦
-                        {% elif bird.name == 'Phoenix' %}🔥
-                        {% elif bird.name == 'Thunderbird' %}⚡
-                        {% elif bird.name == 'Golden Eagle' %}🦅
-                        {% else %}🐦
-                        {% endif %}
+                        <img src="{{ url_for('static', filename='images/' ~ bird.image) }}" alt="{{ bird.name }}">
                     </div>
                 </div>
                 <div class="bird-info">

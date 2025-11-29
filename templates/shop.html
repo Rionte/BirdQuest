@@ -158,6 +158,21 @@
         transform: scale(1.1);
     }
 
+    .bird-img {
+        max-width: 140px;
+        max-height: 140px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        transition: transform 0.3s ease;
+        z-index: 2;
+    }
+
+    .bird-card:hover .bird-img {
+        transform: scale(1.1);
+    }
+
     /* Shiny Effect */
     .bird-card.shiny .bird-image-container::before {
         content: '';
@@ -676,14 +691,7 @@
             {% endif %}
 
             <div class="bird-image-container">
-                <span class="bird-emoji">
-                    {% if bird.rarity == 'common' %}🐦
-                    {% elif bird.rarity == 'uncommon' %}🐤
-                    {% elif bird.rarity == 'rare' %}🦉
-                    {% elif bird.rarity == 'epic' %}🦚
-                    {% else %}🔥
-                    {% endif %}
-                </span>
+                <img src="{{ url_for('static', filename='images/' ~ bird.image) }}" alt="{{ bird.name }}" class="bird-img">
                 {% if bird.owned.shiny %}
                 <div class="shiny-ring"></div>
                 <div class="sparkles">

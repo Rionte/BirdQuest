@@ -36,8 +36,8 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 
 # Constants
-XP_PER_LEVEL = 100
-SEEDS_PER_LEVEL = 10
+XP_PER_LEVEL = 50
+SEEDS_PER_LEVEL = 15
 SHINY_CHANCE = 0.01
 
 # Rarity multipliers for seeds
